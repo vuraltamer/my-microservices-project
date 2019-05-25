@@ -1,0 +1,11 @@
+spring:
+  application:
+      name: order-service
+  config:
+      name: order-service
+  cloud:
+      config:
+        uri: ${CONFIG_SERVER_URL:http://localhost:8888}
+        password: ${CONFIG_SERVER_PASSWORD:12345}
+        username: ${CONFIG_SERVER_USERNAME:user}
+#        fail-fast: true

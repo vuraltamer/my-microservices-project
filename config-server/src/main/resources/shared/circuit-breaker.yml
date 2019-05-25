@@ -1,0 +1,16 @@
+info:
+  component: Circuit Breaker
+
+server:
+  port: ${PORT:${vcap.application.port:8769}}
+
+logging:
+  file: ${user.home}/Downloads/log/circuit-breaker.log
+
+turbine:
+  aggregator:
+    clusterConfig: SAMPLE-HYSTRIX-AGGREGATE
+  appConfig: SAMPLE-HYSTRIX-AGGREGATE
+
+#  /turbine.stream?cluster=SAMPLE-HYSTRIX-AGGREGATE
+

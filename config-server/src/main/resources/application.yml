@@ -1,0 +1,40 @@
+info:
+  description: Config Server
+
+server:
+  port: ${vcap.application.port:8888}
+
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/shared
+
+security:
+  user:
+    name: ${CONFIG_SERVER_USERNAME:user}
+    password: ${CONFIG_SERVER_PASSWORD:12345}
+
+logging:
+  file: ${user.home}/my-microservices-project/log/config-server.log
+
+eureka:
+  instance:
+    instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+    leaseRenewalIntervalInSeconds: 2
+    leaseExpirationDurationInSeconds: 5
+    prefer-ip-address: true
+  client:
+    enabled: true
+    serviceUrl:
+      defaultZone: http://${EUREKA_USERNAME:user}:${EUREKA_PASSWORD:12345}@localhost:8761/eureka/
+    healthcheck:
+      enabled: true
+    lease:
+      duration: 5
+

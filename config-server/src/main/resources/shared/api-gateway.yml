@@ -1,0 +1,32 @@
+  info:
+    component: Api Gateway
+
+server:
+  port: ${PORT:${vcap.application.port:8765}}
+
+logging:
+  file: ${user.home}/Downloads/log/api-gateway.log
+
+
+## load balancing
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 60000
+  eureka.enabled: true
+
+zuul:
+  add-proxy-headers: true
+  ignoredServices: '*'
+  host:
+    connect-timeout-millis: 30000
+    socket-timeout-millis: 30000
+  routes:
+    user-service:
+      path: /user-service/**
+      sensitiveHeaders:
+      serviceId: user-service
+    order-service:
+      path: /order-service/**
+      sensitiveHeaders:
+      serviceId: order-service
+

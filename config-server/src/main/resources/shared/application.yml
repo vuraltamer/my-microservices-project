@@ -1,0 +1,45 @@
+logging:
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"
+  level:
+    ROOT: DEBUG
+    org.apache.http: ERROR
+    com.netflix: ERROR
+    sun.rmi.transport.tcp: ERROR
+    org.springframework: INFO
+    org.hibernate: INFO
+    springfox.documentation: INFO
+    org.apache.tomcat.util: INFO
+    sun.rmi: INFO
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+        timeout:
+          enabled: false
+
+ribbon:
+  ConnectTimeout: 10000
+  ReadTimeout: 240000
+  eureka.enabled: true
+
+
+eureka:
+  instance:
+    instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+    leaseRenewalIntervalInSeconds: 2
+    leaseExpirationDurationInSeconds: 5
+    prefer-ip-address: true
+  client:
+    enabled: true
+    serviceUrl:
+      defaultZone: http://${EUREKA_USERNAME:user}:${EUREKA_PASSWORD:12345}@localhost:8761/eureka/
+    healthcheck:
+      enabled: true
+    lease:
+      duration: 5

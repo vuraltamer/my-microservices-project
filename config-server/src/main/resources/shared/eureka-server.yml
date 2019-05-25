@@ -1,0 +1,24 @@
+info:
+  component: Eureka Server
+
+server:
+  port: ${PORT:${vcap.application.port:8761}}
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+#      defaultZone: http://${EUREKA_USERNAME:user}:${EUREKA_PASSWORD:12345}@${eureka.instance.hostname}:${server.port}/eureka/
+    server:
+      waitTimeInMsWhenSyncEmpty: 0
+
+security:
+  basic:
+    enabled: true
+  user:
+      name: ${EUREKA_USERNAME:user}
+      password: ${EUREKA_PASSWORD:12345}
